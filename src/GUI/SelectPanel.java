@@ -64,7 +64,7 @@ public class SelectPanel extends JPanel implements ActionListener {
             // 单聊
             mainFrame.getSelectPanel().setEnabled(false);
             mainFrame.getSelectPanel().setVisible(false);
-            mainFrame.getChatPanel().getTitle().setText("单聊:"+e.getActionCommand());
+            mainFrame.getChatPanel().getTitle().setText("私聊:"+e.getActionCommand());
             mainFrame.getChatPanel().setType(2);
             mainFrame.getChatPanel().setAcceptName(e.getActionCommand());
             mainFrame.getChatPanel().setVisible(true);

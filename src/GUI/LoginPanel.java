@@ -57,6 +57,9 @@ public class LoginPanel extends JPanel implements ActionListener, KeyListener {
     public void setLoginProcess(Boolean bool){
         this.loginProcess = bool;
     }
+    public Boolean getIsLogin(){
+        return this.isLogin;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -113,7 +116,6 @@ public class LoginPanel extends JPanel implements ActionListener, KeyListener {
                             break;
                         }else if(isLogin){
                             // 表示登陆成功 向服务器告知该主机上登陆用户的用户名
-                            mainFrame.getClient().sendMessage(new Message(name,"login",0,null));
                             mainFrame.setTitle("我的昵称:"+name);
                             nameTextField.setText("");
                             mainFrame.getLoginPanel().setEnabled(false);

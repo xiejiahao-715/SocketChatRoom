@@ -80,7 +80,8 @@ public class ServerThread implements Runnable{
                                 serverManager.broadcastMessage(name,new Message(name, "PermitLogin:"+serverManager.getAllUserName(),0,null));
                                 System.out.println("用户:"+this.name+" 已登陆成功"+" 当前用户数: "+serverManager.getSize()+" "+serverManager.getAllUserName());
                             }else if(message.getMessage().equals("exit")){
-                                serverManager.sendMessage(name,new Message(name,"PermitExit",0,null));
+                                serverManager.sendMessage(name,new Message(name,"PermitExit:"+ serverManager.getAllUserName(),0,null));
+                                serverManager.broadcastMessage(name,new Message(name,"PermitExit:"+ serverManager.getAllUserName(),0,null));
                                 System.out.println("用户:"+this.name+" 退出");
                             }
                         }else if(message.getType() == 1){

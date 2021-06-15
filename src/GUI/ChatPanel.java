@@ -118,6 +118,7 @@ public class ChatPanel extends JPanel implements ActionListener, KeyListener {
                 chatMessages.setText("");
                 message.setText("");
                 mainFrame.setTitle("基于TCP的聊天室");
+                mainFrame.getLoginPanel().setIsLogin(false);
                 mainFrame.getChatPanel().setEnabled(false);
                 mainFrame.getChatPanel().setVisible(false);
                 mainFrame.getLoginPanel().setEnabled(true);

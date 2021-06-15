@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /*
  * @className: ClientThread
@@ -40,7 +42,6 @@ public class ClientThread implements Runnable {
             // 创建流对象的顺序非常重要
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-            mainFrame.getLoginPanel().setIsLogin(true);
             // 创建监听线程保持连接
             new Thread(new ClientListen()).start();
         } catch (IOException e) {
@@ -85,11 +86,28 @@ public class ClientThread implements Runnable {
                 status = true;
                 while (status) {
                     try {
+                        if(!mainFrame.getLoginPanel().getIsLogin()){// 如果客户端不处于登陆状态
+                            sendMessage(new Message(name,"login",0,null)); // 发送登陆请求
+                        }
                         Message message = (Message) ois.readObject();
                         if (message.getType() == 0) {
-                            if (message.getMessage().equals("PermitExit")) {
-                                break;
+                            if (message.getMessage().contains("PermitExit")) {
+                                // 监听用户的退出
+                                // 如果要退出的用户不是本客户端 则刷新本客户端用户在线的界面 否则直接退出
+                                if(!message.getUsername().contains(name)) {
+                                    String s = message.getMessage().substring(message.getMessage().indexOf('[') + 1, message.getMessage().lastIndexOf(']'));
+                                    String[] temp = Arrays.stream(s.split(",")).filter(x -> !x.contains(message.getUsername())).toArray(String[]::new);
+                                    mainFrame.setAllUserName(temp);
+                                    System.out.println("用户 " + message.getUsername() + " 退出成功");
+                                }else {
+                                    System.out.println("用户 " + message.getUsername() + " 退出成功");
+                                    break;
+                                }
                             } else if(message.getMessage().contains("PermitLogin")){
+                                if(message.getUsername().equals(name)){
+                                    mainFrame.getLoginPanel().setIsLogin(true);
+                                    System.out.println("用户 "+name+" 登陆成功");
+                                }
                                 // 监听用户登陆
                                 String s= message.getMessage().substring(message.getMessage().indexOf('[')+1,message.getMessage().lastIndexOf(']'));
                                 mainFrame.setAllUserName(s.split(","));
