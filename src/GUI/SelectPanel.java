@@ -55,6 +55,7 @@ public class SelectPanel extends JPanel implements ActionListener {
             mainFrame.getSelectPanel().setVisible(false);
             mainFrame.getChatPanel().getTitle().setText("群聊");
             mainFrame.getChatPanel().setType(1);
+            mainFrame.getChatPanel().getChatMessages().setText(mainFrame.getAllMessages().get(null));
             mainFrame.getChatPanel().setAcceptName(null);
             mainFrame.getChatPanel().setVisible(true);
             mainFrame.getChatPanel().setVisible(true);
@@ -66,6 +67,7 @@ public class SelectPanel extends JPanel implements ActionListener {
             mainFrame.getSelectPanel().setVisible(false);
             mainFrame.getChatPanel().getTitle().setText("私聊:"+e.getActionCommand());
             mainFrame.getChatPanel().setType(2);
+            mainFrame.getChatPanel().getChatMessages().setText(mainFrame.getAllMessages().get(e.getActionCommand()));
             mainFrame.getChatPanel().setAcceptName(e.getActionCommand());
             mainFrame.getChatPanel().setVisible(true);
             mainFrame.getChatPanel().setVisible(true);

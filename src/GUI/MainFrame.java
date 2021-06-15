@@ -3,6 +3,7 @@ package GUI;
 import Client.ClientThread;
 
 import javax.swing.JFrame;
+import java.util.HashMap;
 
 public class MainFrame extends JFrame{
     public int port;
@@ -18,23 +19,13 @@ public class MainFrame extends JFrame{
     private SelectPanel selectPanel;
     private ClientThread client;// 一个客户端管理一个client
     private String[] allUserName;
-    public MainFrame getMainFrame() {
-        return mainFrame;
-    }
-    public void setMainFrame(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
-    }
+    private HashMap<String,String> allMessages; // 用于管理所有用户发送的消息 键位null时代表群聊
+
     public LoginPanel getLoginPanel() {
         return loginPanel;
     }
-    public void setLoginPanel(LoginPanel loginPanel) {
-        this.loginPanel = loginPanel;
-    }
     public ChatPanel getChatPanel() {
         return chatPanel;
-    }
-    public void setChatPanel(ChatPanel chatPanel) {
-        this.chatPanel = chatPanel;
     }
     public ClientThread getClient(){
         return client;
@@ -45,6 +36,10 @@ public class MainFrame extends JFrame{
     public String[] getAllUserName() {
         return allUserName;
     }
+    public HashMap<String, String> getAllMessages() {
+        return allMessages;
+    }
+
     public void setAllUserName(String[] allUserName) {
         for (int i = 0;i < allUserName.length;i++){
             allUserName[i] = allUserName[i].strip();
@@ -56,6 +51,10 @@ public class MainFrame extends JFrame{
         super();
         mainFrame = this;
         this.port = port;
+
+        this.allMessages = new HashMap<String,String>();
+        this.allMessages.put(null, ""); // 默认情况下有群聊消息，为空
+
         loginPanel = new LoginPanel(mainFrame);
         chatPanel = new ChatPanel(mainFrame);
         selectPanel = new SelectPanel(mainFrame);

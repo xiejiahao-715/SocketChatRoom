@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 /*
  * @className: ClientThread
@@ -99,6 +98,7 @@ public class ClientThread implements Runnable {
                                     String[] temp = Arrays.stream(s.split(",")).filter(x -> !x.contains(message.getUsername())).toArray(String[]::new);
                                     mainFrame.setAllUserName(temp);
                                     System.out.println("用户 " + message.getUsername() + " 退出成功");
+                                    mainFrame.getAllMessages().remove(message.getUsername());
                                 }else {
                                     System.out.println("用户 " + message.getUsername() + " 退出成功");
                                     break;
@@ -112,8 +112,20 @@ public class ClientThread implements Runnable {
                                 String s= message.getMessage().substring(message.getMessage().indexOf('[')+1,message.getMessage().lastIndexOf(']'));
                                 mainFrame.setAllUserName(s.split(","));
                             }
-                        } else {
-                            mainFrame.getChatPanel().getChatMessages().append(message.getUsername()+":"+message.getMessage() + "\r\n");
+                        } else if(message.getType() == 1){ // 群聊消息
+                            mainFrame.getAllMessages().put(null,mainFrame.getAllMessages().get(null)+message.getUsername()+":"+message.getMessage() + "\r\n");
+                            if(mainFrame.getChatPanel().getType() == 1){
+                                mainFrame.getChatPanel().getChatMessages().append(message.getUsername()+":"+message.getMessage() + "\r\n");
+                            }
+                        } else if(message.getType() == 2){ // 私聊消息
+                            if(mainFrame.getAllMessages().containsKey(message.getUsername())){
+                                mainFrame.getAllMessages().put(message.getUsername(),mainFrame.getAllMessages().get(message.getAcceptName())+message.getUsername()+":"+message.getMessage() + "\r\n");
+                            }else {
+                                mainFrame.getAllMessages().put(message.getUsername(),message.getUsername()+":"+message.getMessage() + "\r\n");
+                            }
+                            if(mainFrame.getChatPanel().getType() == 2){
+                                mainFrame.getChatPanel().getChatMessages().append(message.getUsername()+":"+message.getMessage() + "\r\n");
+                            }
                         }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();

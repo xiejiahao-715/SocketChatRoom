@@ -24,6 +24,10 @@ public class ChatPanel extends JPanel implements ActionListener, KeyListener {
         return chatMessages;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public void setAcceptName(String acceptName) {
         this.acceptName = acceptName;
     }
@@ -121,6 +125,8 @@ public class ChatPanel extends JPanel implements ActionListener, KeyListener {
                 mainFrame.getLoginPanel().setIsLogin(false);
                 mainFrame.getChatPanel().setEnabled(false);
                 mainFrame.getChatPanel().setVisible(false);
+                mainFrame.getAllMessages().clear();
+                mainFrame.getAllMessages().put(null,"");
                 mainFrame.getLoginPanel().setEnabled(true);
                 mainFrame.getLoginPanel().setVisible(true);
                 break;
@@ -152,6 +158,10 @@ public class ChatPanel extends JPanel implements ActionListener, KeyListener {
             Message sendMessage = new Message(mainFrame.getClient().getName(),info,type,acceptName);
             mainFrame.getClient().sendMessage(sendMessage);
             chatMessages.append(mainFrame.getClient().getName() +":"+ info + "\r\n");
+            if(type == 2 && !mainFrame.getAllMessages().containsKey(acceptName)){
+                mainFrame.getAllMessages().put(acceptName,"");
+            }
+            mainFrame.getAllMessages().put(acceptName,mainFrame.getAllMessages().get(acceptName)+mainFrame.getClient().getName() +":"+ info + "\r\n");
             message.setText("");
             message.requestFocusInWindow();
         }
