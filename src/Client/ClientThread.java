@@ -107,6 +107,9 @@ public class ClientThread implements Runnable {
                                 if(message.getUsername().equals(name)){
                                     mainFrame.getLoginPanel().setIsLogin(true);
                                     System.out.println("用户 "+name+" 登陆成功");
+                                }else{
+                                    mainFrame.getAllMessages().put(null,mainFrame.getAllMessages().get(null)+"[系统提醒]用户: "+message.getUsername()+" 加入群聊\r\n");
+                                    mainFrame.getChatPanel().getChatMessages().append("[系统提醒]用户: "+message.getUsername()+" 加入群聊\r\n");
                                 }
                                 // 监听用户登陆
                                 String s= message.getMessage().substring(message.getMessage().indexOf('[')+1,message.getMessage().lastIndexOf(']'));
