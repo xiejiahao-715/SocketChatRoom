@@ -3,6 +3,8 @@ package GUI;
 import Client.ClientThread;
 
 import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 public class MainFrame extends JFrame{
@@ -51,7 +53,7 @@ public class MainFrame extends JFrame{
         super();
         mainFrame = this;
         this.port = port;
-
+        this.client = null;
         this.allMessages = new HashMap<String,String>();
         this.allMessages.put(null, ""); // 默认情况下有群聊消息，为空
 
@@ -71,5 +73,12 @@ public class MainFrame extends JFrame{
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(client != null)
+                    client.CloseClient();
+            }
+        });
     }
 }

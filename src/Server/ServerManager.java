@@ -53,8 +53,10 @@ public class ServerManager {
      */
     public void sendMessage(String name,Message message){
         try {
-            allSocket.get(name).getOos().writeUnshared(message);
-            allSocket.get(name).getOos().flush();
+            if(allSocket.get(name) != null) {
+                allSocket.get(name).getOos().writeUnshared(message);
+                allSocket.get(name).getOos().flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

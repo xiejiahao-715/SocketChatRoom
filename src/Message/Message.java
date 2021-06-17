@@ -13,35 +13,27 @@ public class Message implements Serializable {
     //type表示发送数据的类型，1表示发送的是群发消息 2表示发送的是私聊消息
     // 0 表示特殊的消息，表示客户端与服务端进行特殊的交互，比如退出功能的实现，登陆时交给服务端必要的信息，如用户名
     private int type;
-
     public String getAcceptName() {
         return acceptName;
     }
-
     public void setAcceptName(String acceptName) {
         this.acceptName = acceptName;
     }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getMessage() {
         return message;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }
-
     public int getType() {
         return type;
     }
-
     public void setType(int type) {
         this.type = type;
     }
@@ -61,7 +53,6 @@ public class Message implements Serializable {
     public String toString(){
         return "用户名:"+username+" 消息:"+message+" 类型:"+type+" 收件人:"+acceptName;
     }
-
     // 判断所给该类型的对象是否合法
     public Boolean isLegal(){
         // 保证用户名不能为空
