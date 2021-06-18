@@ -1,0 +1,6 @@
+字符编码：UTF-8
+JDK版本：11(不支持JDK8)
+开发工具：IDEA
+测试前请先开启 服务器 然后开启客户端
+服务器在src/StartApp目录下运行ServerStart.java文件开启
+默认端口号 9000
